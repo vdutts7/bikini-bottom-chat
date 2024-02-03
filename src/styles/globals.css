@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 195 100% 75%; /* Light blue for ocean */
+    --foreground: 210 40% 98%;
+
+    --card: 45 100% 75%; /* Sandy yellow */
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --popover: 45 100% 75%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --primary: 0 85% 60%; /* Krusty Krab red */
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 55 97% 58%; /* SpongeBob yellow */
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --muted: 195 50% 80%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 130 52% 46%; /* Seaweed green */
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+ 
+    --radius: 0.5rem;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image: url('/images/bubbles.png');
+    background-repeat: repeat;
+    background-blend-mode: overlay;
+  }
+}
+
+.ocean-gradient {
+  background: linear-gradient(to bottom, hsl(195, 100%, 75%), hsl(195, 100%, 50%));
+}
+
+.sand-gradient {
+  background: linear-gradient(to bottom, hsl(45, 100%, 75%), hsl(45, 100%, 65%));
+}
