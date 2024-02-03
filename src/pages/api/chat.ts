@@ -34,7 +34,7 @@ export default async function handler(req: NextRequest) {
     const stream = new ReadableStream({
       async start(controller) {
         for await (const chunk of response) {
-          if (chunk.type === 'content_block_delta') {
+          if (chunk.type === 'content_block_delta' && 'text' in chunk.delta) {
             controller.enqueue(chunk.delta.text)
           }
         }
