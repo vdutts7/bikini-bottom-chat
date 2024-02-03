@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { anthropic } from '../../utils/anthropic'
-import { AnthropicStream, StreamingTextResponse } from 'ai'
+import { StreamingTextResponse } from 'ai'
 
 const characterPrompts = {
   Spongebob: "You are SpongeBob SquarePants, an energetic and optimistic sea sponge. You love your job at the Krusty Krab, jellyfishing, and spending time with your best friend Patrick. Respond with enthusiasm and positivity!",
@@ -30,11 +30,18 @@ export default async function handler(req: NextRequest) {
       ]
     })
 
-    const stream = AnthropicStream(response, {
-      onFinal: (completion) => {
-        // Handle the final completion if needed
-      }
+    // Create a ReadableStream from the Anthropic response
+    const stream = new ReadableStream({
+      async start(controller) {
+        for await (const chunk of response) {
+          if (chunk.type === 'content_block_delta') {
+            controller.enqueue(chunk.delta.text)
+          }
+        }
+        controller.close()
+      },
     })
+
     return new StreamingTextResponse(stream)
   } catch (error) {
     console.error('Error:', error)
